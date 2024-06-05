@@ -18,6 +18,9 @@ const Options = struct {
 };
 
 /// Create a cuid2 generator.
+///
+/// Parameters:
+/// - `length`: a comptime value in range [2, 32] to specify the length of the generated identifiers.s
 pub fn Cuid2(comptime length: u8) type {
     if (length < MinIdLength or length > MaxIdLength) {
         @compileError("Invalid idLength. Cuid2 id length must be in the range [2,32].");
@@ -41,6 +44,7 @@ pub fn Cuid2(comptime length: u8) type {
             };
         }
 
+        /// Generates a cuid2 identifier.
         pub fn next(self: *Self) [length]u8 {
 
             // u64 values result in max 13 base36 chars
