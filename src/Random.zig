@@ -16,7 +16,7 @@ rnd: ?std.Random,
 
 pub fn init(randomFn: ?RandomFn) Self {
     if (randomFn == null and prng == null) {
-        const seed = @as(u64, @bitCast(std.time.milliTimestamp()));
+        const seed = @as(u64, @bitCast(std.time.microTimestamp()));
         prng = std.rand.DefaultPrng.init(seed);
     }
 
