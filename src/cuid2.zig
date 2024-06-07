@@ -77,6 +77,21 @@ pub fn Cuid2(comptime length: u8) type {
             return format(hash, self.rnd.aplpha());
         }
 
+        /// Verifies wether the supplied value is a valid `Cuid2(length)`.
+        pub fn isValid(id: []const u8) bool {
+            if (id.len != length) return false;
+
+            for (id) |c| {
+                switch (c) {
+                    '0'...'9' => {},
+                    'a'...'z' => {},
+                    else => return false,
+                }
+            }
+
+            return true;
+        }
+
         fn format(hash: [64]u8, firstChar: u8) [length]u8 {
 
             // we need to accomodate the 64 bytes of the hash
@@ -149,4 +164,14 @@ test "Cuid2.next()" {
     var cuid_3 = Cuid2(3).init(.{});
 
     try testing.expectEqual(3, cuid_3.next().len);
+}
+
+test "Cuid2.isValid()" {
+    var cuid_20 = Cuid2(20).init(.{});
+
+    try testing.expectEqual(true, Cuid2(20).isValid(&cuid_20.next()));
+    try testing.expectEqual(false, Cuid2(2).isValid(&cuid_20.next()));
+    try testing.expectEqual(true, Cuid2(2).isValid("aa"));
+    try testing.expectEqual(false, Cuid2(2).isValid("  "));
+    try testing.expectEqual(false, Cuid2(2).isValid("AA"));
 }
