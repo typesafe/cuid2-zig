@@ -78,7 +78,7 @@ The random function must return a `f64` value in range `[0,1)`. The default impl
 
 ## Test Results
 
-Running the histogram test will generate 100k `Cuid2(24)` identifiers, check for collisions and output the following historgrams.
+Running the histogram test will generate 100k `Cuid2(24)` identifiers, check for collisions and output the following histograms.
 
 An even distribution of the actual value of the ids:
 
